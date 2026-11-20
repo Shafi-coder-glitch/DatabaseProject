@@ -1,0 +1,328 @@
+mysql> CREATE DATABASE helpdesk;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> USE helpdesk;
+Database changed
+mysql> CREATE TABLE Employee (
+    ->     EmployeeID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     EmployeeName VARCHAR(100),
+    ->     Email VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> CREATE TABLE ITStaff (
+    ->     StaffID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     StaffName VARCHAR(100),
+    ->     Email VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE TicketStatus (
+    ->     StatusID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     StatusName VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> CREATE TABLE Ticket (
+    ->     TicketID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     EmployeeID INT,
+    ->     StaffID INT,
+    ->     StatusID INT,
+    ->     Description TEXT,
+    ->     FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID),
+    ->     FOREIGN KEY (StaffID) REFERENCES ITStaff(StaffID),
+    ->     FOREIGN KEY (StatusID) REFERENCES TicketStatus(StatusID)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> CREATE TABLE TicketComment (
+    ->     CommentID INT AUTO_INCREMENT PRIMARY KEY,
+    ->     TicketID INT,
+    ->     CommentText TEXT,
+    ->     CommentDate DATETIME,
+    ->     FOREIGN KEY (TicketID) REFERENCES Ticket(TicketID)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_helpdesk |
++--------------------+
+| employee           |
+| itstaff            |
+| ticket             |
+| ticketcomment      |
+| ticketstatus       |
++--------------------+
+5 rows in set (0.04 sec)
+
+mysql> INSERT INTO Employee (EmployeeName, Email) VALUES
+    -> ('John Smith', 'john@example.com'),
+    -> ('Shafi Abdullahi', 'shafi@example.com'),
+    -> ('David Brown', 'david@example.com');
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Employee;
++------------+-----------------+-------------------+
+| EmployeeID | EmployeeName    | Email             |
++------------+-----------------+-------------------+
+|          1 | John Smith      | john@example.com  |
+|          2 | Shafi Abdullahi | shafi@example.com |
+|          3 | David Brown     | david@example.com |
++------------+-----------------+-------------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO ITStaff (StaffName, Email) VALUES
+    -> ('Ahmed Ali', 'ahmed@example.com'),
+    -> ('Sarah Miller', 'sarah@example.com'),
+    -> ('Michael Wilson', 'michael@example.com');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO TicketStatus (StatusName) VALUES
+    -> ('Open'),
+    -> ('In Progress'),
+    -> ('Closed');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Ticket (EmployeeID, StaffID, StatusID, Description) VALUES
+    -> (1, 1, 1, 'Computer is not working'),
+    -> (2, 2, 2, 'Unable to connect to Wi-Fi'),
+    -> (3, 3, 3, 'Password reset request');
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO TicketComment (TicketID, CommentText, CommentDate) VALUES
+    -> (1, 'Computer needs inspection', '2026-11-19 09:00:00'),
+    -> (2, 'Checking network connection', '2026-11-19 10:00:00'),
+    -> (3, 'Password reset completed', '2026-11-19 11:00:00');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Employee;
++------------+-----------------+-------------------+
+| EmployeeID | EmployeeName    | Email             |
++------------+-----------------+-------------------+
+|          1 | John Smith      | john@example.com  |
+|          2 | Shafi Abdullahi | shafi@example.com |
+|          3 | David Brown     | david@example.com |
++------------+-----------------+-------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ITStaff;
++---------+----------------+---------------------+
+| StaffID | StaffName      | Email               |
++---------+----------------+---------------------+
+|       1 | Ahmed Ali      | ahmed@example.com   |
+|       2 | Sarah Miller   | sarah@example.com   |
+|       3 | Michael Wilson | michael@example.com |
++---------+----------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM TicketStatus;
++----------+-------------+
+| StatusID | StatusName  |
++----------+-------------+
+|        1 | Open        |
+|        2 | In Progress |
+|        3 | Closed      |
++----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Ticket;
++----------+------------+---------+----------+----------------------------+
+| TicketID | EmployeeID | StaffID | StatusID | Description                |
++----------+------------+---------+----------+----------------------------+
+|        1 |          1 |       1 |        1 | Computer is not working    |
+|        2 |          2 |       2 |        2 | Unable to connect to Wi-Fi |
+|        3 |          3 |       3 |        3 | Password reset request     |
++----------+------------+---------+----------+----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> Terminal close -- exit!
+mysql> SELECT * FROM Employee;
++------------+-----------------+-------------------+
+| EmployeeID | EmployeeName    | Email             |
++------------+-----------------+-------------------+
+|          1 | John Smith      | john@example.com  |
+|          2 | Shafi Abdullahi | shafi@example.com |
+|          3 | David Brown     | david@example.com |
++------------+-----------------+-------------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * FROM ITStaff;
++---------+----------------+---------------------+
+| StaffID | StaffName      | Email               |
++---------+----------------+---------------------+
+|       1 | Ahmed Ali      | ahmed@example.com   |
+|       2 | Sarah Miller   | sarah@example.com   |
+|       3 | Michael Wilson | michael@example.com |
++---------+----------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM TicketStatus;
++----------+-------------+
+| StatusID | StatusName  |
++----------+-------------+
+|        1 | Open        |
+|        2 | In Progress |
+|        3 | Closed      |
++----------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Ticket;
++----------+------------+---------+----------+----------------------------+
+| TicketID | EmployeeID | StaffID | StatusID | Description                |
++----------+------------+---------+----------+----------------------------+
+|        1 |          1 |       1 |        1 | Computer is not working    |
+|        2 |          2 |       2 |        2 | Unable to connect to Wi-Fi |
+|        3 |          3 |       3 |        3 | Password reset request     |
++----------+------------+---------+----------+----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM TicketComment;
++-----------+----------+-----------------------------+---------------------+
+| CommentID | TicketID | CommentText                 | CommentDate         |
++-----------+----------+-----------------------------+---------------------+
+|         1 |        1 | Computer needs inspection   | 2026-11-19 09:00:00 |
+|         2 |        2 | Checking network connection | 2026-11-19 10:00:00 |
+|         3 |        3 | Password reset completed    | 2026-11-19 11:00:00 |
++-----------+----------+-----------------------------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> Terminal close -- exit!
+mysql> SELECT Ticket.TicketID, Employee.EmployeeName, Ticket.Description
+    -> FROM Ticket
+    -> JOIN Employee ON Ticket.EmployeeID = Employee.EmployeeID;
++----------+-----------------+----------------------------+
+| TicketID | EmployeeName    | Description                |
++----------+-----------------+----------------------------+
+|        1 | John Smith      | Computer is not working    |
+|        2 | Shafi Abdullahi | Unable to connect to Wi-Fi |
+|        3 | David Brown     | Password reset request     |
++----------+-----------------+----------------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM Employee
+    -> ORDER BY EmployeeName;
++------------+-----------------+-------------------+
+| EmployeeID | EmployeeName    | Email             |
++------------+-----------------+-------------------+
+|          3 | David Brown     | david@example.com |
+|          1 | John Smith      | john@example.com  |
+|          2 | Shafi Abdullahi | shafi@example.com |
++------------+-----------------+-------------------+
+3 rows in set (0.01 sec)
+
+mysql> SELECT * FROM Ticket
+    -> WHERE StatusID = 1;
++----------+------------+---------+----------+-------------------------+
+| TicketID | EmployeeID | StaffID | StatusID | Description             |
++----------+------------+---------+----------+-------------------------+
+|        1 |          1 |       1 |        1 | Computer is not working |
++----------+------------+---------+----------+-------------------------+
+1 row in set (0.01 sec)
+
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE PROCEDURE AddEmployee(
+    ->     IN p_Name VARCHAR(100),
+    ->     IN p_Email VARCHAR(100)
+    -> )
+    -> BEGIN
+    ->     INSERT INTO Employee (EmployeeName, Email)
+    ->     VALUES (p_Name, p_Email);
+    -> END //
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> DELIMITER //
+mysql> 
+mysql> CREATE FUNCTION CountTickets()
+    -> RETURNS INT
+    -> READS SQL DATA
+    -> BEGIN
+    ->     DECLARE total INT;
+    ->     SELECT COUNT(*) INTO total FROM Ticket;
+    ->     RETURN total;
+    -> END //
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> 
+mysql> DELIMITER ;
+mysql> SELECT CountTickets() AS TotalTickets;
++--------------+
+| TotalTickets |
++--------------+
+|            3 |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_helpdesk |
++--------------------+
+| employee           |
+| itstaff            |
+| ticket             |
+| ticketcomment      |
+| ticketstatus       |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE Employee;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| EmployeeID   | int          | NO   | PRI | NULL    | auto_increment |
+| EmployeeName | varchar(100) | YES  |     | NULL    |                |
+| Email        | varchar(100) | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.02 sec)
+
+mysql> DESCRIBE ITStaff;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| StaffID   | int          | NO   | PRI | NULL    | auto_increment |
+| StaffName | varchar(100) | YES  |     | NULL    |                |
+| Email     | varchar(100) | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> DESCRIBE TicketStatus;
++------------+-------------+------+-----+---------+----------------+
+| Field      | Type        | Null | Key | Default | Extra          |
++------------+-------------+------+-----+---------+----------------+
+| StatusID   | int         | NO   | PRI | NULL    | auto_increment |
+| StatusName | varchar(50) | YES  |     | NULL    |                |
++------------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> DESCRIBE Ticket;
++-------------+------+------+-----+---------+----------------+
+| Field       | Type | Null | Key | Default | Extra          |
++-------------+------+------+-----+---------+----------------+
+| TicketID    | int  | NO   | PRI | NULL    | auto_increment |
+| EmployeeID  | int  | YES  | MUL | NULL    |                |
+| StaffID     | int  | YES  | MUL | NULL    |                |
+| StatusID    | int  | YES  | MUL | NULL    |                |
+| Description | text | YES  |     | NULL    |                |
++-------------+------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+mysql> DESCRIBE TicketComment;
++-------------+----------+------+-----+---------+----------------+
+| Field       | Type     | Null | Key | Default | Extra          |
++-------------+----------+------+-----+---------+----------------+
+| CommentID   | int      | NO   | PRI | NULL    | auto_increment |
+| TicketID    | int      | YES  | MUL | NULL    |                |
+| CommentText | text     | YES  |     | NULL    |                |
+| CommentDate | datetime | YES  |     | NULL    |                |
++-------------+----------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> notee;
