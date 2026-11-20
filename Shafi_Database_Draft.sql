@@ -125,3 +125,10 @@ DESCRIBE ITStaff;
 DESCRIBE TicketStatus;
 DESCRIBE Ticket;
 DESCRIBE TicketComment;
+
+-- Verify sample data in each table
+SELECT * FROM Employee;
+SELECT * FROM ITStaff;
+SELECT * FROM TicketStatus;
+SELECT * FROM Ticket;
+SELECT * FROM TicketComment;
